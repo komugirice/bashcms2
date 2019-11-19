@@ -1,10 +1,30 @@
 #!/bin/bash -eux
 source "$(dirname $0)/bin/conf"
+#echo source:$(dirname $0)/bin/conf
 
-["$USER" = "root"] # USER MUST BE ROOT
+[ "$USER" = "root" ] # USER MUST BE ROOT
 
-### PULL DATA ###
+### INSTALL THIS SYSTEM ###
+#echo $(dirname $0)/bin/
+#echo appdir/:$appdir/
+
+rsync -av "$(dirname $0)/bin/" "$appdir/"
+chown -R _www:_www "$appdir"
+
+### RENAME FETCH CGI ###
+cd "$appdir"
+rnd=$(cat /dev/urandom | LC_CTYPE=C tr -cd 0-9a-zA-Z | head -c 32)
+[ -e "/home/ueda/rnd" ] && rnd=$(cat /home/ueda/rnd ) #REMOVEON RELEASE!!!
+
+#echo (/home/ueda/rnd)=$(cat /home/ueda/rnd )
+mv "fetch" "fetch_$rnd.cgi"
+
+### PULL ARTICLE REPO ###
+echo contentsdir:${contentsdir}
 rm -rf "${contentsdir:?}"
 cd "$wwwdir"
 git clone "https://github.com/$contents_owner/$contents"
-chown www-data:www-data "$contentsdir" -R 
+chown -R _www:_www "$contentsdir"
+
+echo "call fetch_$rnd.cgi from GitHub"
+

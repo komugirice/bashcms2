@@ -1,0 +1,8 @@
+
+#!/bin/bash -eux
+source "$(dirname $0)/bin/conf"
+cd "$appdir"
+rnd=$(cat /dev/urandom | LC_CTYPE=C tr -cd 0-9a-zA-Z | head -c 32)
+#[ -e "/home/ueda/rnd" ] && rnd=$(cat /home/ueda/rnd ) #REMOVEON RELEASE!!!
+
+echo "call fetch_$rnd.cgi from GitHub"
