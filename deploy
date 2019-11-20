@@ -9,7 +9,7 @@ source "$(dirname $0)/bin/conf"
 #echo appdir/:$appdir/
 
 rsync -av "$(dirname $0)/bin/" "$appdir/"
-chown -R _www:_www "$appdir"
+chown -R mypc:staff "$appdir"
 
 ### RENAME FETCH CGI ###
 cd "$appdir"
@@ -24,7 +24,7 @@ echo contentsdir:${contentsdir}
 rm -rf "${contentsdir:?}"
 cd "$wwwdir"
 git clone "https://github.com/$contents_owner/$contents"
-chown -R _www:_www "$contentsdir"
+chown -R mypc:staff "$contentsdir"
 
 echo "call fetch_$rnd.cgi from GitHub"
 
