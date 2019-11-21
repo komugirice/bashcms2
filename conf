@@ -3,4 +3,5 @@ contents_owner="komugirice"	#記事リポジトリの持ち主のユーザ名
 wwwdir="/Users/mypc/dev"	#記事リポジトリやbashcms2を置くディレクトリ
 contentsdir="$wwwdir/$contents"	#記事リポジトリのパス
 appdir="$wwwdir/bashcms2"	#bashcms2をインストールするパス
-
+viewdir="$appdir/view"
+logdir="/var/log/$contents"
