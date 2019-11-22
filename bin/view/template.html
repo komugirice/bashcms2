@@ -3,12 +3,21 @@ Content-type: text/html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>$title$</title>
 </head>
 <body>
+  <header>
+    <span>$created_time$</span>
+  </header>
     $body$
+  <footer>
+    <p>created: $created_time$,
+      modified: $modified_time$,
+      keywords: $Keywords$</p>
+    <p>Copyright: $Copyright$</p>
+  </footer> 
 </body>
 </html>
