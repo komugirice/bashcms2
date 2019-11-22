@@ -1,16 +1,13 @@
 #!/bin/bash -eux
 source "$(dirname $0)/bin/conf"
-#echo source:$(dirname $0)/bin/conf
 
 [ "$USER" = "root" ] # USER MUST BE ROOT
 
-mkdir -p "$logdir"
-chown _www:_www "$logdir"
+### CREATE DIRECTORIES ###
+mkdir -p "$logdir" "$datadir"
+chown _www:_www "$logdir" "$datadir"
 
 ### INSTALL THIS SYSTEM ###
-#echo $(dirname $0)/bin/
-#echo appdir/:$appdir/
-
 rsync -av "$(dirname $0)/bin/" "$appdir/"
 chown -R _www:_www "$appdir"
 
@@ -19,7 +16,6 @@ cd "$appdir"
 rnd=$(cat /dev/urandom | LC_CTYPE=C tr -cd 0-9a-zA-Z | head -c 32)
 [ -e "/home/ueda/rnd" ] && rnd=$(cat /home/ueda/rnd ) #REMOVEON RELEASE!!!
 
-#echo (/home/ueda/rnd)=$(cat /home/ueda/rnd )
 mv "fetch" "fetch_$rnd.cgi"
 
 ### PULL ARTICLE REPO ###
