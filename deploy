@@ -4,8 +4,8 @@ source "$(dirname $0)/bin/conf"
 [ "$USER" = "root" ] # USER MUST BE ROOT
 
 ### CREATE DIRECTORIES ###
-mkdir -p "$logdir" "$datadir"
-chown _www:_www "$logdir" "$datadir"
+mkdir -p "$logdir" "$datadir" "$datadir/counters"
+chown _www:_www "$logdir" "$datadir" "$datadir/counters"
 
 ### INSTALL THIS SYSTEM ###
 rsync -av "$(dirname $0)/bin/" "$appdir/"

@@ -6,4 +6,6 @@ appdir="$wwwdir/bashcms2"	#bashcms2をインストールするパス
 viewdir="$appdir/view"
 logdir="/var/log/$contents"
 datadir="${contentsdir}_data"
+# 改変
+rootDir="/bashcms2/"
 export LANG=ja_JP.UTF-8

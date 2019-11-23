@@ -3,9 +3,6 @@ source "$(dirname $0)/conf"
 exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 [ -n "${CONTENT_LENGTH}"] && dd bs=${CONTENT_LENGTH} > /dev/null
 
-# 改変
-rootDir="/bashcms2/"
-
 echo -e 'Content-type: text/html\n'
 
 cd "$contentsdir"
