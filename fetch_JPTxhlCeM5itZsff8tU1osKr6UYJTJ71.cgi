@@ -1,13 +1,12 @@
 #!/bin/bash -euvx
-shopt -s expand_aliases
 source "$(dirname $0)/conf"
-#exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
-#[ -n "${CONTENT_LENGTH}"] && dd bs=${CONTENT_LENGTH} > /dev/null
+exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
+[ -n "${CONTENT_LENGTH}"] && dd bs=${CONTENT_LENGTH} > /dev/null
 
 echo -e 'Content-type: text/html\n'
 
 cd "$contentsdir"
-#git pull
+git pull
 
 ### CREATE TIMESTAMP FILES IF NOT EXIST ###
 find posts pages -maxdepth 1 -type d	|
@@ -19,11 +18,10 @@ while read d; do
   git log -p "$contentsdir/$d/main.md" |
   grep '^Date:'	|
   awk '{print $2,$3,$4,$5,$6}'	|
-  date -f - "+%Y-%m-%d %H:%M:%S"	|
-#  awk -v cf="$datadir/$d/created_time" \
-#    -v mf="$datadir/$d/modified_time" \
-#    'NR==1{print > mf}END{print > cf}'
-  echo -e $(cat)
+  gdate -f - "+%Y-%m-%d %H:%M:%S"	|
+  awk -v cf="$datadir/$d/created_time" \
+    -v mf="$datadir/$d/modified_time" \
+    'NR==1{print > mf}END{print > cf}'
 
 done
 
@@ -34,6 +32,5 @@ grep /		|
 while read d; do
     echo "$contentsdir/$d/main.md"
     [ -f "$contentsdir/$d/main.md" ] && continue
-#    rm -Rf "./$d"
-	echo "./$d"
+    rm -Rf "./$d"
 done
