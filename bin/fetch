@@ -3,6 +3,9 @@ source "$(dirname $0)/conf"
 exec 2> "$logdir/$(basename $0).$(date +%Y%m%d_%H%M%S).$$"
 [ -n "${CONTENT_LENGTH}"] && dd bs=${CONTENT_LENGTH} > /dev/null
 
+# 改変
+rootDir="/bashcms2/"
+
 echo -e 'Content-type: text/html\n'
 
 cd "$contentsdir"
@@ -45,8 +48,10 @@ find posts pages -maxdepth 1 -type d    |
     awk '{if(/^$/){print "NO TITLE"}else{print}}
       END{if(NR==0){print "NO TITLE"}}'		|
     tee "$datadir/$d/title"		|
-    awk -v d="$d" '{gsub(/s\//,"=",d);
-        print "<a href=\"/?" d "\">" $0 "</a>"}' > "$datadir/$d/link"
+    #awk -v d="$d" '{gsub(/s\//,"=",d);
+        #print "<a href=\"/?" d "\">" $0 "</a>"}' > "$datadir/$d/link"
+    awk -v d="$d" -v rootDir="$rootDir" '{gsub(/s\//,"=",d);
+        print "<a href=\"" rootDir "?" d "\">" $0 "</a>"}' > "$datadir/$d/link"
 
     touch "$datadir/$d/nav"
   done
@@ -76,10 +81,10 @@ while read ymd hms d ; do
     grep -C1 " $d$" "$datadir/post_list"	|
     awk '{print $3}'		|
     sed -n -e '1p' -e '$p'	|
-    xargs -l@ cat "$datadir/@/link"		|
+    xargs -I@ cat "$datadir/@/link"		|
     awk 'NR<=2{print}END{for(i=NR;i<2;i++){print "LOST TITLE"}}'  |
     sed -e '1s/^/prev:/' -e '2s/^/next:/'		|
-    tr '\n'''		> "$datadir/$d/nav"
+    tr '\n' ' '		> "$datadir/$d/nav"
 done
 
 rm -f $tmp-* #中間ファイルの削除
